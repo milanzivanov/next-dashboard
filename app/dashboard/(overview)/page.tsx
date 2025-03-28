@@ -4,7 +4,6 @@ import LatestInvoices from "@/app/ui/dashboard/latest-invoices";
 
 import { lusitana } from "@/app/ui/fonts";
 
-import { fetchCardData } from "../../lib/data";
 import { Suspense } from "react";
 import {
   CardSkeleton,
