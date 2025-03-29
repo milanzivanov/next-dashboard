@@ -6,6 +6,8 @@ import { lusitana } from "@/app/ui/fonts";
 import { InvoicesTableSkeleton } from "@/app/ui/skeletons";
 import { Suspense } from "react";
 
+import { fetchInvoicesPages } from "@/app/lib/data";
+
 async function Page(props: {
   searchParams?: Promise<{
     query?: string;
@@ -17,6 +19,7 @@ async function Page(props: {
   const query = params?.query || "";
   const currentPage = params?.page ? parseInt(params.page) : 1;
   // const currentPage = Number(params?.page) || 1;
+  const totalPages = await fetchInvoicesPages(query);
 
   return (
     <div className="w-full">
@@ -31,7 +34,7 @@ async function Page(props: {
         <Table query={query} currentPage={currentPage} />
       </Suspense>
       <div className="mt-5 flex w-full justify-center">
-        {/* <Pagination totalPages={totalPages} /> */}
+        <Pagination totalPages={totalPages} />
       </div>
     </div>
   );
