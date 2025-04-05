@@ -4,6 +4,7 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import postgres from "postgres";
+import { signIn } from "@/auth/auth";
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
@@ -83,7 +84,7 @@ export async function updateInvoice(
     status: formData.get("status")
   });
 
-  console.log("/////////////// ", validatedFields);
+  // console.log("/////////////// ", validatedFields);
 
   if (!validatedFields.success) {
     return {
@@ -117,4 +118,14 @@ export async function deleteInvoice(id: string) {
 
   await sql`DELETE FROM invoices WHERE id = ${id}`;
   revalidatePath("/dashboard/invoices");
+}
+
+// Google sign-in action
+export async function signInWithGoogle() {
+  await signIn("google");
+}
+
+// GitHub sign-in action
+export async function signInWithGithub() {
+  await signIn("github");
 }

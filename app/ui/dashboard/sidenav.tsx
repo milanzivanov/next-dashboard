@@ -20,14 +20,14 @@ export default async function SideNav() {
         </div>
       </Link>
       <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
-        <p>
+        {/* <p>
           <img
             className="inline-block h-8 w-8 rounded-full ring-2 ring-white mr-1"
             src={session?.user?.image ?? ""}
             alt={session?.user?.name ?? "User"}
           />
           Hello
-        </p>
+        </p> */}
         <NavLinks />
         <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div>
         <form
