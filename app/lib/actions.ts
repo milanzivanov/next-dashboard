@@ -4,8 +4,7 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import postgres from "postgres";
-import { AuthError } from "next-auth";
-import { signIn } from "@/auth";
+import { signIn } from "@/auth/auth";
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
@@ -85,7 +84,7 @@ export async function updateInvoice(
     status: formData.get("status")
   });
 
-  console.log("/////////////// ", validatedFields);
+  // console.log("/////////////// ", validatedFields);
 
   if (!validatedFields.success) {
     return {
@@ -121,22 +120,12 @@ export async function deleteInvoice(id: string) {
   revalidatePath("/dashboard/invoices");
 }
 
-///////////////
-export async function authenticate(
-  prevState: string | undefined,
-  formData: FormData
-) {
-  try {
-    await signIn("credentials", formData);
-  } catch (error) {
-    if (error instanceof AuthError) {
-      switch (error.type) {
-        case "CredentialsSignin":
-          return "Invalid credentials.";
-        default:
-          return "Something went wrong.";
-      }
-    }
-    throw error;
-  }
+// Google sign-in action
+export async function signInWithGoogle() {
+  await signIn("google");
+}
+
+// GitHub sign-in action
+export async function signInWithGithub() {
+  await signIn("github");
 }
